@@ -35,7 +35,7 @@ uv run manage.py runserver
 
 ### Test framework
 
-Install `pytest-django` for dev
+Install [pytest-django](https://pytest-django.readthedocs.io/en/latest/index.html) for dev
 
 ```
 uv add --dev pytest-django
@@ -63,4 +63,21 @@ configfile: pyproject.toml
 plugins: django-4.9.0
 collected 0 items
 === no tests ran in 0.23s ===
+```
+
+### Linter
+
+Install [ruff](https://github.com/astral-sh/ruff) for dev
+
+```shell
+uv add --dev ruff
+
+# lint all files
+ruff check
+# check format
+ruff format --check
+# check format and diff
+ruff format --diff
+# format
+ruff format
 ```
