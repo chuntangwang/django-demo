@@ -4,16 +4,43 @@ A demo for restaurant guide system
 
 ## Init app
 
-### Create app
-
 ```shell
+# load venv
 source .venv/bin/activate
+# create app
 django-admin startapp restaurant
+
+# migrate db
+python manage.py migrate
+# run server
+python manage.py runserver
 ```
 
-### Run server
+## Model Design
 
-```shell
-python manage.py migrate
-python manage.py runserver
+```mermaid
+---
+title: Restaurant
+---
+erDiagram
+    RESTAURANT {
+        int id PK
+        string name
+        string description
+        string user_id FK
+    }
+    REVIEW {
+        int id PK
+        int restaurant_id FK
+        int user_id FK
+        int score
+        string comment
+    }
+    USER {
+        int id PK
+        string name
+    }
+    RESTAURANT ||--o{ REVIEW: "gets"
+    USER ||--o{ RESTAURANT: "creates"
+    USER ||--o{ REVIEW: "creates"
 ```
