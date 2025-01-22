@@ -1,10 +1,15 @@
-# Restaurant Guide
+# Restaurant App
 
-A demo for restaurant guide system
+A demo for restaurant review system
 
 ## Init app
 
 ```shell
+# clone project, then checkout branch
+git clone --branch feature/restaurant https://github.com/chuntangwang/django-demo
+# create venv and install package
+uv sync
+
 # load venv
 source .venv/bin/activate
 # create app
