@@ -6,7 +6,7 @@ def f():
 
 
 def test_function():
-    assert f() == 4, "result of f() should be 4"
+    assert f() == 4, 'result of f() should be 4'
 
 
 def test_zero_division():

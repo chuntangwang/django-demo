@@ -44,6 +44,7 @@ erDiagram
     USER {
         int id PK
         string name
+        string email
     }
     RESTAURANT ||--o{ REVIEW: "gets"
     USER ||--o{ RESTAURANT: "creates"
