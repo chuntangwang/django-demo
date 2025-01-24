@@ -6,4 +6,6 @@ router = DefaultRouter()
 router.register(r'restaurants', views.RestaurantViewSet, basename='restaurant')
 router.register(r'reviews', views.ReviewViewSet, basename='review')
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('', include(router.urls))
+]

@@ -17,10 +17,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from restaurant import urls
+from restaurant.admin import user_admin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', user_admin.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('restaurant/api/', include(urls.urlpatterns))
+    path('restaurant/api/', include('restaurant.urls')),
 ]

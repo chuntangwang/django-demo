@@ -17,15 +17,18 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    # restaurant = serializers.SlugRelatedField(queryset=Restaurant.objects, slug_field='name')
-    user = serializers.SerializerMethodField()
+    restaurant = RestaurantSerializer()
+    # user = serializers.SerializerMethodField()
     score = serializers.ChoiceField([1, 2, 3, 4, 5])
 
-    def get_user(self, obj):
-        request = self.context.get('request')
-        if request and request.user and request.user.is_authenticated:
-            return request.user.username
-        return None
+    # def get_user(self, obj):
+    #     request = self.context.get('request')
+    #     if request and request.user and request.user.is_authenticated:
+    #         return request.user.username
+    #     return None
+
+    # def create(self, validated_data):
+    #     return super().create(validated_data)
 
     class Meta:
         model = Review
