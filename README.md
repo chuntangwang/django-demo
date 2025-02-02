@@ -81,3 +81,7 @@ ruff format --diff
 # format
 ruff format
 ```
+
+### Restaurant Demo
+
+* [Restaurant doc](docs/restaurant.md)

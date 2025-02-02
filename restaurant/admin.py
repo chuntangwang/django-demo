@@ -1,8 +1,3 @@
-from django.contrib import admin
-from .models import User
+from django.contrib import admin  # noqa
 
-class UserAdminSite(admin.AdminSite):
-    site_header = 'Restaurant users administration'
-
-user_admin = UserAdminSite(name='user_admin')
-user_admin.register(User)
+# Register your models here.
