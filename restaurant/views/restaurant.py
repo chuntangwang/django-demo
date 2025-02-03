@@ -4,7 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from django.db.models import Avg
 from restaurant.models import Restaurant, Review
-from rest_framework.serializers import CharField
+from rest_framework.serializers import CharField, ChoiceField
 from restaurant import serializers
 from drf_spectacular.utils import (
     extend_schema,
@@ -29,6 +29,24 @@ partial_update_restaurant_searializer = inline_serializer(
     fields={
         'name': CharField(max_length=250),
         'description': CharField(allow_blank=True),
+    },
+)
+
+create_update_review_searializer = inline_serializer(
+    name='CreateUpdateReviewRequest',
+    fields={
+        'restaurant_id': CharField(required=True),
+        'score': ChoiceField(choices=[1, 2, 3, 4, 5], required=True),
+        'comment': CharField(allow_blank=True),
+    },
+)
+
+partial_update_review_searializer = inline_serializer(
+    name='PartialUpdateReviewRequest',
+    fields={
+        'restaurant_id': CharField(required=True),
+        'score': ChoiceField(choices=[1, 2, 3, 4, 5]),
+        'comment': CharField(allow_blank=True),
     },
 )
 
@@ -91,6 +109,7 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     retrieve=extend_schema(description='Retrieve a review.'),
     create=extend_schema(
         description='Create a review, same user can only create a review in same restaurant.',
+        request=create_update_review_searializer,
         examples=[
             OpenApiExample(
                 'Request Example',
@@ -124,8 +143,13 @@ class RestaurantViewSet(viewsets.ModelViewSet):
             ),
         ],
     ),
-    update=extend_schema(description='Update a review.'),
-    partial_update=extend_schema(description='Partial update a review.'),
+    update=extend_schema(
+        description='Update a review.', request=create_update_review_searializer
+    ),
+    partial_update=extend_schema(
+        description='Partial update a review.',
+        request=partial_update_review_searializer,
+    ),
     destroy=extend_schema(description='Delete a review.'),
 )
 class ReviewViewSet(viewsets.ModelViewSet):
