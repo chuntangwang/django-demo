@@ -113,3 +113,49 @@ erDiagram
   "description": "1958年成立，最初為油行，1972年轉為餐廳兼賣小籠包。1996年，鼎泰豐日本新宿店開幕，發展為跨國企業。在1993年曾被《紐約時報》評為“世界十大美食餐廳”之一。2010年香港尖沙咀分店獲得米其林一星，是台灣首間獲《米其林指南》列入星級的餐廳。"
 }
 ```
+
+#### POST /api/v1/reviews/
+
+**user posted**
+
+```json
+{
+  "restaurant_id": 1,
+  "score": 3,
+  "comment": "酸辣湯才是主角"
+}
+
+{
+  "restaurant_id": 2,
+  "score": 5,
+  "comment": "珍珠奶茶好喝！"
+}
+
+{
+  "restaurant_id": 3,
+  "score": 4,
+  "comment": "有夠貴，我家隔壁巷子好吃又便宜！"
+}
+```
+
+**foodie posted**
+
+```json
+{
+  "restaurant_id": 1,
+  "score": 4,
+  "comment": "酸辣湯超好喝！"
+}
+
+{
+  "restaurant_id": 2,
+  "score": 5,
+  "comment": "氣氛不錯，適合久坐聊天"
+}
+
+{
+  "restaurant_id": 3,
+  "score": 5,
+  "comment": "每次回國必吃，台灣的家鄉味"
+}
+```
