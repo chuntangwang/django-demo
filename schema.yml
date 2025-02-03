@@ -4,9 +4,9 @@ info:
   version: 1.0.0
   description: A demo for restaurant review system
 paths:
-  /api/auth-token/:
+  /api/v1/auth-token/:
     post:
-      operationId: api_auth_token_create
+      operationId: v1_auth_token_create
       description: Create or update the auth token of session user.
       tags:
       - Authorization
@@ -27,9 +27,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/DetailResponse'
           description: ''
-  /api/login/:
+  /api/v1/login/:
     post:
-      operationId: api_login_create
+      operationId: v1_login_create
       description: Login with username and password.
       tags:
       - Login
@@ -58,9 +58,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/DetailResponse'
           description: ''
-  /api/logout/:
+  /api/v1/logout/:
     delete:
-      operationId: api_logout_destroy
+      operationId: v1_logout_destroy
       description: Logout the current user.
       tags:
       - Authorization
@@ -71,9 +71,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/DetailResponse'
           description: ''
-  /api/register/:
+  /api/v1/register/:
     post:
-      operationId: api_register_create
+      operationId: v1_register_create
       description: Register a new user.
       tags:
       - Login
@@ -102,9 +102,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorsResponse'
           description: ''
-  /api/restaurants/:
+  /api/v1/restaurants/:
     get:
-      operationId: api_restaurants_list
+      operationId: v1_restaurants_list
       description: List all restaurants with descending order of average score.
       parameters:
       - name: page
@@ -133,7 +133,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedRestaurantList'
           description: ''
     post:
-      operationId: api_restaurants_create
+      operationId: v1_restaurants_create
       description: Create a restaurant.
       tags:
       - Restaurant
@@ -160,9 +160,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Restaurant'
           description: ''
-  /api/restaurants/{id}/:
+  /api/v1/restaurants/{id}/:
     get:
-      operationId: api_restaurants_retrieve
+      operationId: v1_restaurants_retrieve
       description: Retrieve a restaurant.
       parameters:
       - in: path
@@ -185,7 +185,7 @@ paths:
                 $ref: '#/components/schemas/Restaurant'
           description: ''
     put:
-      operationId: api_restaurants_update
+      operationId: v1_restaurants_update
       description: Update a restaurant.
       parameters:
       - in: path
@@ -220,7 +220,7 @@ paths:
                 $ref: '#/components/schemas/Restaurant'
           description: ''
     patch:
-      operationId: api_restaurants_partial_update
+      operationId: v1_restaurants_partial_update
       description: Partial update a restaurant.
       parameters:
       - in: path
@@ -254,7 +254,7 @@ paths:
                 $ref: '#/components/schemas/Restaurant'
           description: ''
     delete:
-      operationId: api_restaurants_destroy
+      operationId: v1_restaurants_destroy
       description: Delete a restaurant.
       parameters:
       - in: path
@@ -272,9 +272,9 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/reviews/:
+  /api/v1/reviews/:
     get:
-      operationId: api_reviews_list
+      operationId: v1_reviews_list
       description: List all reviews.
       parameters:
       - name: page
@@ -312,7 +312,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedReviewList'
           description: ''
     post:
-      operationId: api_reviews_create
+      operationId: v1_reviews_create
       description: Create a review, same user can only create a review in same restaurant.
       tags:
       - Review
@@ -364,9 +364,9 @@ paths:
                     date_created: '2025-02-02T17:37:03.560Z'
                   summary: Response Example
           description: ''
-  /api/reviews/{id}/:
+  /api/v1/reviews/{id}/:
     get:
-      operationId: api_reviews_retrieve
+      operationId: v1_reviews_retrieve
       description: Retrieve a review.
       parameters:
       - in: path
@@ -389,7 +389,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     put:
-      operationId: api_reviews_update
+      operationId: v1_reviews_update
       description: Update a review.
       parameters:
       - in: path
@@ -424,7 +424,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     patch:
-      operationId: api_reviews_partial_update
+      operationId: v1_reviews_partial_update
       description: Partial update a review.
       parameters:
       - in: path
@@ -458,7 +458,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     delete:
-      operationId: api_reviews_destroy
+      operationId: v1_reviews_destroy
       description: Delete a review.
       parameters:
       - in: path

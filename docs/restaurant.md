@@ -23,8 +23,8 @@ source .venv/bin/activate
 python manage.py runserver
 
 # using open api with drf-spectacular and swagger ui
-$ ./manage.py spectacular --color --file schema.yml
-$ docker run -p 80:8080 -e SWAGGER_JSON=/schema.yml -v ${PWD}/schema.yml:/schema.yml swaggerapi/swagger-ui
+python manage.py spectacular --color --file schema.yml
+docker run -p 80:8080 -e SWAGGER_JSON=/schema.yml -v ${PWD}/schema.yml:/schema.yml swaggerapi/swagger-ui
 ```
 
 Open API:
@@ -32,7 +32,7 @@ Open API:
 * redoc: http://127.0.0.1:8000/api/schema/redoc/
 
 Exported Open API html file:
-* [redoc.html](redoc.html)
+* [redoc-static.html](redoc-static.html)
 
 ## Model Design
 
@@ -68,11 +68,12 @@ erDiagram
 
 ### Demo account
 
-1. Create superuser
+**1. Create superuser**
 ```shell
 python manage.py createsuperuser
 ```
-2. Create by API `/api/register` for users
+
+**2. Create by API `/api/register` for users**
 
 `db.sqlite3` contain accounts: (user/password)
 * `admin` / `admin123`

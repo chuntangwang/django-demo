@@ -2,6 +2,8 @@ from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 import restaurant.views as views
 
+app_name = 'restaurant'
+
 router = SimpleRouter()
 router.register(r'restaurants', views.RestaurantViewSet, basename='restaurant')
 router.register(r'reviews', views.ReviewViewSet, basename='review')

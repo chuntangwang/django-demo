@@ -31,5 +31,5 @@ urlpatterns = [
     # allow access static files of drf-spectacular-sidecar if settings.DEBUG is False
     re_path(r'^static/(?P<path>.*)$', return_static, name='static'),
     # restaurant api
-    path('api/', include('restaurant.urls')),
+    path('api/v1/', include('restaurant.urls', namespace='v1')),
 ]
