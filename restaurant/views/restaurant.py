@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from django.db.models import Avg
 from restaurant.models import Restaurant, Review
 from rest_framework.serializers import CharField, ChoiceField
@@ -54,7 +54,16 @@ partial_update_review_searializer = inline_serializer(
 @extend_schema(tags=['Restaurant'])
 @extend_schema_view(
     list=extend_schema(
-        description='List all restaurants with descending order of average score.'
+        description='List all restaurants with descending order of average score.',
+        parameters=[
+            OpenApiParameter(
+                name='ordering',
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+                description='Sort by average score.',
+                enum=['-avg_score', 'avg_score'],
+            ),
+        ]
     ),
     retrieve=extend_schema(description='Retrieve a restaurant.'),
     create=extend_schema(
@@ -72,14 +81,15 @@ partial_update_review_searializer = inline_serializer(
 class RestaurantViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RestaurantSerializer
     permission_classes = [IsAuthenticated]
-    filter_backends = [DjangoFilterBackend, SearchFilter]
-    search_fields = ['name']
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ['name', 'description']
+    ordering_fields = ['avg_score']
 
     # TODO: using task queue or stored procedure to update resturant__avg_score in db.
     def get_queryset(self):
         return Restaurant.objects.annotate(
             avg_score=Avg('review__score', default=0)
-        ).order_by('-avg_score')
+        ) #.order_by('-avg_score')
 
 
 @extend_schema(tags=['Review'])
