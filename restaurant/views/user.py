@@ -137,9 +137,5 @@ class LogoutView(DestroyAPIView):
 
     @extend_schema(auth=[], responses={204: detail_serializer}, tags=['Authorization'])
     def delete(self, request):
-        username = request.user.username
         logout(request)
-        return Response(
-            {'detail': f'{username} successfully logged out.'},
-            status=status.HTTP_204_NO_CONTENT,
-        )
+        return Response(status=status.HTTP_204_NO_CONTENT)
