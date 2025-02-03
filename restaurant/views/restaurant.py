@@ -104,6 +104,12 @@ class RestaurantViewSet(viewsets.ModelViewSet):
                 description='Filter by restaurant id.',
             ),
             OpenApiParameter(
+                name='restaurant__name',
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+                description='Filter by exact restaurant.name.',
+            ),
+            OpenApiParameter(
                 name='user',
                 type=OpenApiTypes.INT,
                 location=OpenApiParameter.QUERY,
@@ -112,7 +118,7 @@ class RestaurantViewSet(viewsets.ModelViewSet):
             OpenApiParameter(
                 name='user__username',
                 type=OpenApiTypes.STR,
-                description='Filter by user.username.',
+                description='Filter by exact user.username.',
             ),
         ],
     ),
@@ -169,6 +175,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = {
         'restaurant': ['exact'],
+        'restaurant__name': ['exact'],
         'user': ['exact'],
         'user__username': ['exact'],
     }
