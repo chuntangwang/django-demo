@@ -133,9 +133,7 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': """
 A demo for restaurant review system.
 
-
-If you're using `SessionAuthentication` you'll need to include valid `CSRF tokens` for any `POST`, `PUT`, `PATCH` or `DELETE` operations.
-
+If you're using `SessionAuthentication` you'll need to include valid `CSRF tokens` for any `POST`, `PUT`, `PATCH` or `DELETE` operations.  
 Refresh the page if encountered `CSRF Failed: CSRF token from the 'X-Csrftoken' HTTP header incorrect.` response.
     """,
     'EXTERNAL_DOCS': {

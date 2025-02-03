@@ -2,14 +2,14 @@ openapi: 3.0.3
 info:
   title: Restaurant Open API
   version: 1.0.0
-  description: "\nA demo for restaurant review system.\n\n\nIf you're using `SessionAuthentication`\
+  description: "\nA demo for restaurant review system.\n\nIf you're using `SessionAuthentication`\
     \ you'll need to include valid `CSRF tokens` for any `POST`, `PUT`, `PATCH` or\
-    \ `DELETE` operations.\n\nRefresh the page if encountered `CSRF Failed: CSRF token\
+    \ `DELETE` operations.  \nRefresh the page if encountered `CSRF Failed: CSRF token\
     \ from the 'X-Csrftoken' HTTP header incorrect.` response.\n    "
 paths:
   /api/v1/auth-token/:
     post:
-      operationId: v1_auth_token_create
+      operationId: api_v1_auth_token_create
       description: Create or update the auth token of session user.
       tags:
       - Authorization
@@ -32,7 +32,7 @@ paths:
           description: ''
   /api/v1/login/:
     post:
-      operationId: v1_login_create
+      operationId: api_v1_login_create
       description: Login with username and password.
       tags:
       - Login
@@ -63,7 +63,7 @@ paths:
           description: ''
   /api/v1/logout/:
     delete:
-      operationId: v1_logout_destroy
+      operationId: api_v1_logout_destroy
       description: Logout the current user.
       tags:
       - Authorization
@@ -76,7 +76,7 @@ paths:
           description: ''
   /api/v1/register/:
     post:
-      operationId: v1_register_create
+      operationId: api_v1_register_create
       description: Register a new user.
       tags:
       - Login
@@ -107,9 +107,17 @@ paths:
           description: ''
   /api/v1/restaurants/:
     get:
-      operationId: v1_restaurants_list
+      operationId: api_v1_restaurants_list
       description: List all restaurants with descending order of average score.
       parameters:
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -avg_score
+          - avg_score
+        description: Sort by average score.
       - name: page
         required: false
         in: query
@@ -136,7 +144,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedRestaurantList'
           description: ''
     post:
-      operationId: v1_restaurants_create
+      operationId: api_v1_restaurants_create
       description: Create a restaurant.
       tags:
       - Restaurant
@@ -165,7 +173,7 @@ paths:
           description: ''
   /api/v1/restaurants/{id}/:
     get:
-      operationId: v1_restaurants_retrieve
+      operationId: api_v1_restaurants_retrieve
       description: Retrieve a restaurant.
       parameters:
       - in: path
@@ -188,7 +196,7 @@ paths:
                 $ref: '#/components/schemas/Restaurant'
           description: ''
     put:
-      operationId: v1_restaurants_update
+      operationId: api_v1_restaurants_update
       description: Update a restaurant.
       parameters:
       - in: path
@@ -223,7 +231,7 @@ paths:
                 $ref: '#/components/schemas/Restaurant'
           description: ''
     patch:
-      operationId: v1_restaurants_partial_update
+      operationId: api_v1_restaurants_partial_update
       description: Partial update a restaurant.
       parameters:
       - in: path
@@ -257,7 +265,7 @@ paths:
                 $ref: '#/components/schemas/Restaurant'
           description: ''
     delete:
-      operationId: v1_restaurants_destroy
+      operationId: api_v1_restaurants_destroy
       description: Delete a restaurant.
       parameters:
       - in: path
@@ -277,7 +285,7 @@ paths:
           description: No response body
   /api/v1/reviews/:
     get:
-      operationId: v1_reviews_list
+      operationId: api_v1_reviews_list
       description: List all reviews.
       parameters:
       - name: page
@@ -292,6 +300,11 @@ paths:
           type: integer
         description: Filter by restaurant id.
       - in: query
+        name: restaurant__name
+        schema:
+          type: string
+        description: Filter by exact restaurant.name.
+      - in: query
         name: user
         schema:
           type: integer
@@ -300,7 +313,7 @@ paths:
         name: user__username
         schema:
           type: string
-        description: Filter by user.username.
+        description: Filter by exact user.username.
       tags:
       - Review
       security:
@@ -315,7 +328,7 @@ paths:
                 $ref: '#/components/schemas/PaginatedReviewList'
           description: ''
     post:
-      operationId: v1_reviews_create
+      operationId: api_v1_reviews_create
       description: Create a review, same user can only create a review in same restaurant.
       tags:
       - Review
@@ -323,7 +336,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: '#/components/schemas/CreateUpdateReviewRequest'
             examples:
               RequestExample:
                 value:
@@ -335,10 +348,10 @@ paths:
                   `score`: Integers of [1, 2, 3, 4, 5]'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: '#/components/schemas/CreateUpdateReviewRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: '#/components/schemas/CreateUpdateReviewRequest'
         required: true
       security:
       - basicAuth: []
@@ -369,7 +382,7 @@ paths:
           description: ''
   /api/v1/reviews/{id}/:
     get:
-      operationId: v1_reviews_retrieve
+      operationId: api_v1_reviews_retrieve
       description: Retrieve a review.
       parameters:
       - in: path
@@ -392,7 +405,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     put:
-      operationId: v1_reviews_update
+      operationId: api_v1_reviews_update
       description: Update a review.
       parameters:
       - in: path
@@ -407,13 +420,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: '#/components/schemas/CreateUpdateReviewRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: '#/components/schemas/CreateUpdateReviewRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: '#/components/schemas/CreateUpdateReviewRequest'
         required: true
       security:
       - basicAuth: []
@@ -427,7 +440,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     patch:
-      operationId: v1_reviews_partial_update
+      operationId: api_v1_reviews_partial_update
       description: Partial update a review.
       parameters:
       - in: path
@@ -442,13 +455,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedReview'
+              $ref: '#/components/schemas/PatchedPartialUpdateReviewRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedReview'
+              $ref: '#/components/schemas/PatchedPartialUpdateReviewRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedReview'
+              $ref: '#/components/schemas/PatchedPartialUpdateReviewRequest'
       security:
       - basicAuth: []
       - cookieAuth: []
@@ -461,7 +474,7 @@ paths:
                 $ref: '#/components/schemas/Review'
           description: ''
     delete:
-      operationId: v1_reviews_destroy
+      operationId: api_v1_reviews_destroy
       description: Delete a review.
       parameters:
       - in: path
@@ -492,6 +505,19 @@ components:
       required:
       - description
       - name
+    CreateUpdateReviewRequest:
+      type: object
+      properties:
+        restaurant_id:
+          type: string
+        score:
+          $ref: '#/components/schemas/ScoreEnum'
+        comment:
+          type: string
+      required:
+      - comment
+      - restaurant_id
+      - score
     DetailResponse:
       type: object
       properties:
@@ -581,28 +607,15 @@ components:
           maxLength: 250
         description:
           type: string
-    PatchedReview:
+    PatchedPartialUpdateReviewRequest:
       type: object
       properties:
         restaurant_id:
-          type: integer
-          writeOnly: true
-        restaurant:
-          allOf:
-          - $ref: '#/components/schemas/Restaurant'
-          readOnly: true
-        user:
-          allOf:
-          - $ref: '#/components/schemas/User'
-          readOnly: true
+          type: string
         score:
           $ref: '#/components/schemas/ScoreEnum'
         comment:
           type: string
-        date_created:
-          type: string
-          format: date-time
-          readOnly: true
     Restaurant:
       type: object
       properties:
