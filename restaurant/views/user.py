@@ -8,7 +8,8 @@ from rest_framework.settings import api_settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from restaurant.authentication import CsrfExemptSessionAuthentication
+
+# from restaurant.authentication import CsrfExemptSessionAuthentication
 from restaurant import serializers
 from drf_spectacular.utils import extend_schema, inline_serializer
 
@@ -67,7 +68,7 @@ class LoginView(CreateAPIView):
     """
 
     permission_classes = [AllowAny]
-    authentication_classes = [CsrfExemptSessionAuthentication]
+    # authentication_classes = [CsrfExemptSessionAuthentication]
     request_serializer = inline_serializer(
         name='LoginRequest', fields={'username': CharField(), 'password': CharField()}
     )
@@ -133,7 +134,7 @@ class LogoutView(DestroyAPIView):
     """
 
     permission_classes = [IsAuthenticated]
-    authentication_classes = [CsrfExemptSessionAuthentication]
+    # authentication_classes = [CsrfExemptSessionAuthentication]
 
     @extend_schema(auth=[], responses={204: detail_serializer}, tags=['Authorization'])
     def delete(self, request):

@@ -1,5 +1,8 @@
 # Django Demo
 
+* Restaurant Demo
+    * [Documentation](docs/restaurant.md)
+
 ## Prerequisite
 
 * [mise](https://github.com/jdx/mise)
@@ -81,7 +84,3 @@ ruff format --diff
 # format
 ruff format
 ```
-
-### Restaurant Demo
-
-* [Restaurant doc](docs/restaurant.md)

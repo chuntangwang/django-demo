@@ -130,14 +130,27 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Restaurant Open API',
-    'DESCRIPTION': 'A demo for restaurant review system',
+    'DESCRIPTION': """
+A demo for restaurant review system.
+
+
+If you're using `SessionAuthentication` you'll need to include valid `CSRF tokens` for any `POST`, `PUT`, `PATCH` or `DELETE` operations.
+
+Refresh the page if encountered `CSRF Failed: CSRF token from the 'X-Csrftoken' HTTP header incorrect.` response.
+    """,
+    'EXTERNAL_DOCS': {
+        'url': 'https://www.django-rest-framework.org/topics/ajax-csrf-cors/'
+    },
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
     'REDOC_DIST': 'SIDECAR',
     'TAGS': [
-        {'name': 'Login', 'description': 'Get authorization before executing APIs that require authenticated permission.'},
+        {
+            'name': 'Login',
+            'description': 'Get authorization before executing APIs that require authenticated permission.',
+        },
         {'name': 'Authorization', 'description': 'Authorization operations'},
     ],
 }

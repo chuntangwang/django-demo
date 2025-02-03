@@ -2,7 +2,10 @@ openapi: 3.0.3
 info:
   title: Restaurant Open API
   version: 1.0.0
-  description: A demo for restaurant review system
+  description: "\nA demo for restaurant review system.\n\n\nIf you're using `SessionAuthentication`\
+    \ you'll need to include valid `CSRF tokens` for any `POST`, `PUT`, `PATCH` or\
+    \ `DELETE` operations.\n\nRefresh the page if encountered `CSRF Failed: CSRF token\
+    \ from the 'X-Csrftoken' HTTP header incorrect.` response.\n    "
 paths:
   /api/v1/auth-token/:
     post:
@@ -714,3 +717,5 @@ tags:
     permission.
 - name: Authorization
   description: Authorization operations
+externalDocs:
+  url: https://www.django-rest-framework.org/topics/ajax-csrf-cors/

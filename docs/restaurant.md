@@ -60,20 +60,28 @@ erDiagram
         int id PK
         string name
         string email
+        string password
     }
     RESTAURANT ||--o{ REVIEW: "contains"
     USER ||--o{ RESTAURANT: "creates"
     USER ||--o{ REVIEW: "creates"
 ```
 
-### Demo account
+## Demo account
 
-**1. Create superuser**
-```shell
-python manage.py createsuperuser
-```
+Existed in `db.sqlite3` :
 
-**2. Create by API `/api/register` for users**
+* superuser
+    * `admin` / `admin123456`
+* user
+    * `user` / `user123456`
+    * `foodie` / `foodie123456`
 
-`db.sqlite3` contain accounts: (user/password)
-* `admin` / `admin123`
+#### Create accounts
+
+1. Create superuser
+    ```shell
+    python manage.py createsuperuser
+    ```
+2. Create by API `/api/register` for users
+
