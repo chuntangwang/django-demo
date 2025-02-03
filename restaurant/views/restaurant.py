@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from django.db.models import Avg
 from restaurant.models import Restaurant, Review
+from rest_framework.serializers import CharField
 from restaurant import serializers
 from drf_spectacular.utils import (
     extend_schema,
@@ -11,6 +12,24 @@ from drf_spectacular.utils import (
     OpenApiParameter,
     OpenApiTypes,
     OpenApiExample,
+    inline_serializer,
+)
+
+
+create_update_restaurant_searializer = inline_serializer(
+    name='CreateUpdateRestaurantRequest',
+    fields={
+        'name': CharField(max_length=250, required=True),
+        'description': CharField(allow_blank=True, required=True),
+    },
+)
+
+partial_update_restaurant_searializer = inline_serializer(
+    name='PartialUpdateRestaurantRequest',
+    fields={
+        'name': CharField(max_length=250),
+        'description': CharField(allow_blank=True),
+    },
 )
 
 
@@ -20,9 +39,16 @@ from drf_spectacular.utils import (
         description='List all restaurants with descending order of average score.'
     ),
     retrieve=extend_schema(description='Retrieve a restaurant.'),
-    create=extend_schema(description='Create a restaurant.'),
-    update=extend_schema(description='Update a restaurant.'),
-    partial_update=extend_schema(description='Partial update a restaurant.'),
+    create=extend_schema(
+        description='Create a restaurant.', request=create_update_restaurant_searializer
+    ),
+    update=extend_schema(
+        description='Update a restaurant.', request=create_update_restaurant_searializer
+    ),
+    partial_update=extend_schema(
+        description='Partial update a restaurant.',
+        request=partial_update_restaurant_searializer,
+    ),
     destroy=extend_schema(description='Delete a restaurant.'),
 )
 class RestaurantViewSet(viewsets.ModelViewSet):

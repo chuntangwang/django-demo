@@ -141,13 +141,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Restaurant'
+              $ref: '#/components/schemas/CreateUpdateRestaurantRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Restaurant'
+              $ref: '#/components/schemas/CreateUpdateRestaurantRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Restaurant'
+              $ref: '#/components/schemas/CreateUpdateRestaurantRequest'
         required: true
       security:
       - basicAuth: []
@@ -200,13 +200,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Restaurant'
+              $ref: '#/components/schemas/CreateUpdateRestaurantRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Restaurant'
+              $ref: '#/components/schemas/CreateUpdateRestaurantRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Restaurant'
+              $ref: '#/components/schemas/CreateUpdateRestaurantRequest'
         required: true
       security:
       - basicAuth: []
@@ -235,13 +235,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedRestaurant'
+              $ref: '#/components/schemas/PatchedPartialUpdateRestaurantRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedRestaurant'
+              $ref: '#/components/schemas/PatchedPartialUpdateRestaurantRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedRestaurant'
+              $ref: '#/components/schemas/PatchedPartialUpdateRestaurantRequest'
       security:
       - basicAuth: []
       - cookieAuth: []
@@ -478,6 +478,17 @@ paths:
           description: No response body
 components:
   schemas:
+    CreateUpdateRestaurantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 250
+        description:
+          type: string
+      required:
+      - description
+      - name
     DetailResponse:
       type: object
       properties:
@@ -559,21 +570,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Review'
-    PatchedRestaurant:
+    PatchedPartialUpdateRestaurantRequest:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        creator:
-          type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
-          readOnly: true
-        avg_score:
-          type: number
-          format: double
-          readOnly: true
         name:
           type: string
           maxLength: 250
