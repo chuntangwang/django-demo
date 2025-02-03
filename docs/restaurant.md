@@ -67,9 +67,9 @@ erDiagram
     USER ||--o{ REVIEW: "creates"
 ```
 
-## Demo account
+## Sample Database: `db.sqlite3`
 
-Existed in `db.sqlite3` :
+### Demo account
 
 * superuser
     * `admin` / `admin123456`
@@ -77,11 +77,39 @@ Existed in `db.sqlite3` :
     * `user` / `user123456`
     * `foodie` / `foodie123456`
 
-#### Create accounts
+### Create sample data
 
-1. Create superuser
-    ```shell
-    python manage.py createsuperuser
-    ```
-2. Create by API `/api/register` for users
+#### POST /api/v1/register
 
+```json
+{
+  "username": "user",
+  "email": "user@example.com",
+  "password": "user123456"
+}
+
+{
+  "username": "foodie",
+  "email": "foodie@example.com",
+  "password": "foodie123456"
+}
+```
+
+#### POST /api/v1/restaurants/
+
+```json
+{
+  "name": "八方雲集",
+  "description": "源於臺灣的跨國台式麵食連鎖店，1998年成立，創辦人林家鈺，以鍋貼、水餃為主力商品。它與四海遊龍並列為台灣鍋貼連鎖店兩強。"
+}
+
+{
+  "name": "春水堂人文茶館",
+  "description": "是一家源自臺灣臺中的連鎖茶館。主要商品為珍珠奶茶及泡沫紅茶等各式調和茶飲，並推廣半發酵茶葉，提倡雙杯式飲法及色香味三段品茗法。是聲稱發明珍珠奶茶的臺灣連鎖餐廳之一，另一家是翰林茶館。"
+}
+
+{
+  "name": "鼎泰豐",
+  "description": "1958年成立，最初為油行，1972年轉為餐廳兼賣小籠包。1996年，鼎泰豐日本新宿店開幕，發展為跨國企業。在1993年曾被《紐約時報》評為“世界十大美食餐廳”之一。2010年香港尖沙咀分店獲得米其林一星，是台灣首間獲《米其林指南》列入星級的餐廳。"
+}
+```

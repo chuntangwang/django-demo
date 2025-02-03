@@ -1,6 +1,6 @@
-import pytest
-from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth.models import User
+import pytest
 
 
 @pytest.mark.django_db
@@ -10,9 +10,12 @@ def test_db_location():
 
 
 @pytest.mark.django_db
-def test_my_user():
+def test_admin_user():
+    """
+    Test if admin user is created successfully.
+    """
     User.objects.create_superuser(
-        username='admin', password='adminpass', email='admin@example.com'
+        username='admin', password='admin123456', email='admin@example.com'
     )
-    admin = User.objects.get(username='admin')
-    assert admin.is_superuser
+    user = User.objects.get(username='admin')
+    assert user.is_superuser
