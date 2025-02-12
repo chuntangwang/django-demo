@@ -26,7 +26,8 @@ def custom_exception_handler(exc, context):
             detail = exc.messages
         else:
             # subclass of django.db.models.base.subclass_exception created at runtime
-            detail = f'{exc.__class__}'
+            message = exc.args[0] if len(exc.args) > 0 else str(exc.__class__)
+            detail = f'{message}'
         response = Response(
             {'detail': detail}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
