@@ -1,3 +1,5 @@
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
@@ -51,6 +53,25 @@ partial_update_review_searializer = inline_serializer(
 )
 
 
+forbidden_response_searializer = inline_serializer(
+    name='ForbiddenResponse',
+    fields={'detail': CharField()},
+)
+
+
+forbidden_response = Response(
+    {'detail': 'You can only update your own review.'},
+    status=status.HTTP_403_FORBIDDEN,
+)
+
+forbidden_response_example = OpenApiExample(
+    'Forbidden Response Example',
+    value={'detail': 'You can only update your own review.'},
+    status_codes=[403],
+    response_only=True,
+)
+
+
 @extend_schema(tags=['Restaurant'])
 @extend_schema_view(
     list=extend_schema(
@@ -63,7 +84,7 @@ partial_update_review_searializer = inline_serializer(
                 description='Sort by average score.',
                 enum=['-avg_score', 'avg_score'],
             ),
-        ]
+        ],
     ),
     retrieve=extend_schema(description='Retrieve a restaurant.'),
     create=extend_schema(
@@ -89,7 +110,7 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Restaurant.objects.annotate(
             avg_score=Avg('review__score', default=0)
-        ) #.order_by('-avg_score')
+        )  # .order_by('-avg_score')
 
 
 @extend_schema(tags=['Review'])
@@ -159,13 +180,6 @@ class RestaurantViewSet(viewsets.ModelViewSet):
             ),
         ],
     ),
-    update=extend_schema(
-        description='Update a review.', request=create_update_review_searializer
-    ),
-    partial_update=extend_schema(
-        description='Partial update a review.',
-        request=partial_update_review_searializer,
-    ),
     destroy=extend_schema(description='Delete a review.'),
 )
 class ReviewViewSet(viewsets.ModelViewSet):
@@ -179,3 +193,30 @@ class ReviewViewSet(viewsets.ModelViewSet):
         'user': ['exact'],
         'user__username': ['exact'],
     }
+
+    response_serializer = {
+        200: serializers.ReviewSerializer,
+        403: forbidden_response_searializer,
+    }
+
+    @extend_schema(
+        description='Update a review.',
+        request=create_update_review_searializer,
+        responses=response_serializer,
+        examples=[forbidden_response_example],
+    )
+    def update(self, request, *args, **kwargs):
+        if request.user != self.get_object().user:
+            return forbidden_response
+        return super().update(request, *args, **kwargs)
+
+    @extend_schema(
+        description='Partial update a review.',
+        request=partial_update_review_searializer,
+        responses=response_serializer,
+        examples=[forbidden_response_example],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        if request.user != self.get_object().user:
+            return forbidden_response
+        return super().partial_update(request, *args, **kwargs)
